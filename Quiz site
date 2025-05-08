@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Interativo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #quiz-container {
+      background: #222;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+    }
+    .question {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+    .answer {
+      display: block;
+      margin: 10px 0;
+      padding: 10px;
+      background: #333;
+      border: none;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+    .answer:hover {
+      background: #555;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="quiz-container">
+  <div class="question" id="question">Carregando pergunta...</div>
+  <button class="answer" onclick="responder(0)">Resposta A</button>
+  <button class="answer" onclick="responder(1)">Resposta B</button>
+  <button class="answer" onclick="responder(2)">Resposta C</button>
+  <button class="answer" onclick="responder(3)">Resposta D</button>
+  <div id="result"></div>
+</div>
+
+<script>
+  const quiz = [
+    {
+      pergunta: "Qual é a capital do Brasil?",
+      respostas: ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+      correta: 2
+    },
+    {
+      pergunta: "Quanto é 7 x 8?",
+      respostas: ["54", "56", "58", "60"],
+      correta: 1
+    },
+    {
+      pergunta: "Quem escreveu 'Dom Casmurro'?",
+      respostas: ["Machado de Assis", "José de Alencar", "Carlos Drummond", "Clarice Lispector"],
+      correta: 0
+    }
+  ];
+
+  let atual = 0;
+  let acertos = 0;
+
+  function carregarPergunta() {
+    const q = quiz[atual];
+    document.getElementById("question").textContent = q.pergunta;
+    document.querySelectorAll(".answer").forEach((btn, i) => {
+      btn.textContent = q.respostas[i];
+    });
+  }
+
+  function responder(resposta) {
+    if (resposta === quiz[atual].correta) {
+      acertos++;
+    }
+    atual++;
+    if (atual < quiz.length) {
+      carregarPergunta();
+    } else {
+      document.getElementById("quiz-container").innerHTML =
+        `<h2>Você acertou ${acertos} de ${quiz.length} perguntas!</h2>`;
+    }
+  }
+
+  carregarPergunta();
+</script>
+
+</body>
+</html>
